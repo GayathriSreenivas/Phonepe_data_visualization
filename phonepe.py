@@ -9,123 +9,6 @@ import mysql.connector
 import requests
 
 
-sql_connection = mysql.connector.connect(
-    host = "localhost",
-    user = "root",
-    password = "gayathri@123",
-    database = "phonepe"
-)
-
-sqlcursor = sql_connection.cursor()
-
-sqlcursor.execute("SELECT *FROM aggregated_transaction;")
-at_table = sqlcursor.fetchall()
-sql_connection.commit()
-
-sqlcursor.close()
-sql_connection.close()
-
-
-AT = pd.DataFrame(at_table, columns = ("States", "Years", "Quarter", "Transaction_type",
-                                       "Transaction_count", "Transaction_amount"))
-
-sql_connection = mysql.connector.connect(
-    host = "localhost",
-    user = "root",
-    password = "gayathri@123",
-    database = "phonepe"
-)
-
-sqlcursor = sql_connection.cursor()
-
-sqlcursor.execute("SELECT *FROM aggregated_user;")
-at_table = sqlcursor.fetchall()
-sql_connection.commit()
-
-sqlcursor.close()
-sql_connection.close()
-
-AU = pd.DataFrame(at_table, columns = ("States", "Years", "Quarter", "Brands",
-                                       "Transaction_count", "Percentage"))
-
-sql_connection = mysql.connector.connect(
-    host = "localhost",
-    user = "root",
-    password = "gayathri@123",
-    database = "phonepe"
-)
-
-sqlcursor = sql_connection.cursor()
-
-sqlcursor.execute("SELECT *FROM map_transaction;")
-at_table = sqlcursor.fetchall()
-sql_connection.commit()
-
-sqlcursor.close()
-sql_connection.close()
-
-MT = pd.DataFrame(at_table, columns = ("States", "Years", "Quarter", "Districts",
-                                       "Transaction_count", "Transaction_amount"))
-
-sql_connection = mysql.connector.connect(
-    host = "localhost",
-    user = "root",
-    password = "gayathri@123",
-    database = "phonepe"
-)
-
-sqlcursor = sql_connection.cursor()
-
-sqlcursor.execute("SELECT *FROM map_user;")
-at_table = sqlcursor.fetchall()
-sql_connection.commit()
-
-sqlcursor.close()
-sql_connection.close()
-
-MU = pd.DataFrame(at_table, columns = ("States", "Years", "Quarter", "Districts",
-                                       "Registered_Users", "App_Opens"))
-
-sql_connection = mysql.connector.connect(
-    host = "localhost",
-    user = "root",
-    password = "gayathri@123",
-    database = "phonepe"
-)
-
-sqlcursor = sql_connection.cursor()
-
-sqlcursor.execute("SELECT *FROM top_transaction;")
-at_table = sqlcursor.fetchall()
-sql_connection.commit()
-
-sqlcursor.close()
-sql_connection.close()
-
-
-TT = pd.DataFrame(at_table, columns = ("States", "Years", "Quarter","Pincodes" , "Transaction_count",
-                                       "Transaction_amount"))
-
-sql_connection = mysql.connector.connect(
-    host = "localhost",
-    user = "root",
-    password = "gayathri@123",
-    database = "phonepe"
-)
-
-sqlcursor = sql_connection.cursor()
-
-sqlcursor.execute("SELECT *FROM top_users;")
-at_table = sqlcursor.fetchall()
-sql_connection.commit()
-
-sqlcursor.close()
-sql_connection.close()
-
-
-TU = pd.DataFrame(at_table, columns = ("States", "Years", "Quarter","Pincodes" ,"Registered_Users"))
-
-
 def transaction_amount_count(df , year):
     graphs = df[df["Years"] == year]
     graphs.reset_index(drop=True, inplace=True)
@@ -496,6 +379,23 @@ elif select == "DATA EXPLORATION":
         method = st.radio("Choose", ["Aggregated Transaction", "Aggregated User"])
 
         if method == "Aggregated Transaction":
+            sql_connection = mysql.connector.connect(
+                host="localhost",
+                user="root",
+                password="gayathri@123",
+                database="phonepe"
+            )
+            sqlcursor = sql_connection.cursor()
+
+            sqlcursor.execute("SELECT *FROM aggregated_transaction;")
+            at_table = sqlcursor.fetchall()
+            sql_connection.commit()
+
+            sqlcursor.close()
+            sql_connection.close()
+
+            AT = pd.DataFrame(at_table, columns=("States", "Years", "Quarter", "Transaction_type",
+                                                 "Transaction_count", "Transaction_amount"))
             col1, col2 = st.columns(2)
             with col1:
                 years = st.selectbox("Select the year",AT["Years"].unique())
@@ -512,6 +412,25 @@ elif select == "DATA EXPLORATION":
             agg_t(tt, state)
 
         elif method == "Aggregated User":
+            sql_connection = mysql.connector.connect(
+                host="localhost",
+                user="root",
+                password="gayathri@123",
+                database="phonepe"
+            )
+
+            sqlcursor = sql_connection.cursor()
+
+            sqlcursor.execute("SELECT *FROM aggregated_user;")
+            at_table = sqlcursor.fetchall()
+            sql_connection.commit()
+
+            sqlcursor.close()
+            sql_connection.close()
+
+            AU = pd.DataFrame(at_table, columns=("States", "Years", "Quarter", "Brands",
+                                                 "Transaction_count", "Percentage"))
+
             col1,col2 = st.columns(2)
             with col1:
                 years = st.selectbox("Select the Year", AU["Years"].unique())
@@ -531,6 +450,25 @@ elif select == "DATA EXPLORATION":
         method = st.radio("Choose", ["Map Transaction", "Map User"])
 
         if method == "Map Transaction":
+            sql_connection = mysql.connector.connect(
+                host="localhost",
+                user="root",
+                password="gayathri@123",
+                database="phonepe"
+            )
+
+            sqlcursor = sql_connection.cursor()
+
+            sqlcursor.execute("SELECT *FROM map_transaction;")
+            at_table = sqlcursor.fetchall()
+            sql_connection.commit()
+
+            sqlcursor.close()
+            sql_connection.close()
+
+            MT = pd.DataFrame(at_table, columns=("States", "Years", "Quarter", "Districts",
+                                                 "Transaction_count", "Transaction_amount"))
+
             col1, col2 = st.columns(2)
             with col1:
                 years = st.selectbox("Select the year for map analysis", MT["Years"].unique())
@@ -548,6 +486,25 @@ elif select == "DATA EXPLORATION":
 
 
         elif method == "Map User":
+            sql_connection = mysql.connector.connect(
+                host="localhost",
+                user="root",
+                password="gayathri@123",
+                database="phonepe"
+            )
+
+            sqlcursor = sql_connection.cursor()
+
+            sqlcursor.execute("SELECT *FROM map_user;")
+            at_table = sqlcursor.fetchall()
+            sql_connection.commit()
+
+            sqlcursor.close()
+            sql_connection.close()
+
+            MU = pd.DataFrame(at_table, columns=("States", "Years", "Quarter", "Districts",
+                                                 "Registered_Users", "App_Opens"))
+
             col1, col2 = st.columns(2)
             with col1:
                 years = st.selectbox("Select the year for map analysis", MU["Years"].unique())
@@ -568,6 +525,25 @@ elif select == "DATA EXPLORATION":
         method = st.radio("Choose", ["Top Transaction", "Top User"])
 
         if method == "Top Transaction":
+            sql_connection = mysql.connector.connect(
+                host="localhost",
+                user="root",
+                password="gayathri@123",
+                database="phonepe"
+            )
+
+            sqlcursor = sql_connection.cursor()
+
+            sqlcursor.execute("SELECT *FROM top_transaction;")
+            at_table = sqlcursor.fetchall()
+            sql_connection.commit()
+
+            sqlcursor.close()
+            sql_connection.close()
+
+            TT = pd.DataFrame(at_table, columns=("States", "Years", "Quarter", "Pincodes", "Transaction_count",
+                                                 "Transaction_amount"))
+
             col1, col2 = st.columns(2)
             with col1:
                 years = st.selectbox("Select the year for top analysis", TT["Years"].unique())
@@ -584,6 +560,23 @@ elif select == "DATA EXPLORATION":
             top_t(tt, state)
 
         elif method == "Top User":
+            sql_connection = mysql.connector.connect(
+                host="localhost",
+                user="root",
+                password="gayathri@123",
+                database="phonepe"
+            )
+
+            sqlcursor = sql_connection.cursor()
+
+            sqlcursor.execute("SELECT *FROM top_users;")
+            at_table = sqlcursor.fetchall()
+            sql_connection.commit()
+
+            sqlcursor.close()
+            sql_connection.close()
+
+            TU = pd.DataFrame(at_table, columns=("States", "Years", "Quarter", "Pincodes", "Registered_Users"))
             col1, col2 = st.columns(2)
             with col1:
                 years = st.selectbox("Select the year for top analysis", TU["Years"].unique())
